@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — MSc Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1eb;
+    --ink: #1a1a18;
+    --mid: #6b6860;
+    --rule: #d4cfc6;
+    --accent: #2a4a8c;
+    --accent2: #8c2a3a;
+    --tag-bg: #e8e4dc;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    font-size: 15px;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 100; opacity: .45;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    opacity: 0; animation: fadeUp .7s .1s ease forwards;
+  }
+
+  .name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+  }
+
+  .name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--mid);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  .header-meta {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--mid);
+    letter-spacing: .06em;
+    line-height: 1.8;
+  }
+
+  /* ── NAV DOTS ── */
+  nav {
+    padding: 20px 0;
+    display: flex;
+    gap: 28px;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0; animation: fadeUp .7s .25s ease forwards;
+  }
+
+  nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  nav a:hover { color: var(--ink); }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0; animation: fadeUp .7s ease forwards;
+  }
+
+  section:nth-child(3) { animation-delay: .35s; }
+  section:nth-child(4) { animation-delay: .45s; }
+  section:nth-child(5) { animation-delay: .55s; }
+  section:nth-child(6) { animation-delay: .65s; }
+  section:nth-child(7) { animation-delay: .75s; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── PROJECT CARDS ── */
+  .project {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .project:last-child { border-bottom: none; }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .project-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    color: var(--mid);
+    flex-shrink: 0;
+  }
+
+  .project-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent);
+    letter-spacing: .06em;
+    margin-bottom: 10px;
+  }
+
+  .project-desc {
+    color: var(--mid);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .project-tags {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    background: var(--tag-bg);
+    padding: 3px 9px;
+    border-radius: 2px;
+    color: var(--ink);
+    opacity: .7;
+  }
+
+  /* ── INTERESTS GRID ── */
+  .interests {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .interest-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: var(--tag-bg);
+    border-radius: 3px;
+    transition: background .2s;
+  }
+
+  .interest-item:hover { background: #ddd9d0; }
+
+  .interest-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .interest-item:nth-child(2n) .interest-dot { background: var(--accent2); }
+
+  .interest-text {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-org {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .exp-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent);
+    letter-spacing: .06em;
+    margin-bottom: 8px;
+  }
+
+  .exp-desc {
+    color: var(--mid);
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+
+  .exp-meta {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: .06em;
+    line-height: 1.8;
+    white-space: nowrap;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .pub-item:last-child { border-bottom: none; }
+
+  .pub-bar {
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    align-self: stretch;
+  }
+
+  .pub-item:nth-child(2) .pub-bar { background: var(--accent2); }
+
+  .pub-venue {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+
+  .pub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+
+  .pub-desc {
+    color: var(--mid);
+    font-size: 13.5px;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .pub-doi {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: .04em;
+  }
+
+  .pub-doi:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0; animation: fadeUp .7s .85s ease forwards;
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: .08em;
+  }
+
+  .contact-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid var(--ink);
+    transition: background .2s, color .2s;
+  }
+
+  .contact-link:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* ── ANIMATION ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .page { padding: 0 20px; }
+    header { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-meta { text-align: left; }
+    .project-header { flex-direction: column; }
+    footer { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <h1 class="name">Your <em>Name</em></h1>
+      <p class="tagline">MSc Researcher &nbsp;·&nbsp; Micromanufacturing &nbsp;·&nbsp; Heterogeneous Integration &nbsp;·&nbsp; Photonics</p>
+    </div>
+    <div class="header-meta">
+      MSc Student<br>
+      TU Delft / Your University<br>
+      Netherlands
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#projects">Projects</a>
+    <a href="#interests">Interests</a>
+    <a href="#experience">Experience</a>
+    <a href="#publications">Publications</a>
+  </nav>
+
+  <!-- MSC PROJECTS -->
+  <section id="projects">
+    <div class="section-label">MSc Projects</div>
+
+    <div class="project">
+      <div class="project-header">
+        <h3 class="project-title">Design of a MEMS Accelerometer</h3>
+        <span class="project-badge">In Progress</span>
+      </div>
+      <div class="project-role">K Layout · Design &amp; Manufacturing Manager</div>
+      <p class="project-desc">
+        Designing and managing the fabrication pipeline for a MEMS accelerometer. Currently developing an open-source library for MEMS devices with a particular focus on on-chip metrology — including Vernier scale structures for precise dimensional characterization within the die.
+      </p>
+      <div class="project-tags">
+        <span class="tag">MEMS</span>
+        <span class="tag">K Layout</span>
+        <span class="tag">On-Chip Metrology</span>
+        <span class="tag">Vernier Scales</span>
+        <span class="tag">Open Source</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <h3 class="project-title">Heterogeneous Integration of PICs &amp; EICs</h3>
+        <span class="project-badge">Literature / Feasibility</span>
+      </div>
+      <div class="project-role">Advanced Packaging (ETxxxx)</div>
+      <p class="project-desc">
+        Literature review and feasibility analysis of co-integration strategies for Photonic and Electronic Integrated Circuits. Focused on high-frequency solutions — specifically Thin-Film Lithium Niobate (TFLN) — with a thorough examination of Optical Circuit Switches (OCS) as a use case for next-generation AI datacenter interconnects.
+      </p>
+      <div class="project-tags">
+        <span class="tag">PICs &amp; EICs</span>
+        <span class="tag">TFLN</span>
+        <span class="tag">OCS</span>
+        <span class="tag">AI Datacenters</span>
+        <span class="tag">Advanced Packaging</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <h3 class="project-title">Manufacturing of Perovskite–CIGS Solar Cells</h3>
+        <span class="project-badge">Thin Film Materials</span>
+      </div>
+      <div class="project-role">Manufacturing Scalability Research</div>
+      <p class="project-desc">
+        Investigating the manufacturing scalability of Perovskite and CIGS tandem thin-film solar cells. Research focuses on alternatives to ultrasonic spin-coating to achieve conformal deposition at scale, alongside techniques for reducing the pinhole effect — a key yield and reliability concern in perovskite absorber layers.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Perovskite</span>
+        <span class="tag">CIGS</span>
+        <span class="tag">Thin Film</span>
+        <span class="tag">Scalability</span>
+        <span class="tag">Conformality</span>
+        <span class="tag">Pinhole Reduction</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section id="interests">
+    <div class="section-label">Research Interests</div>
+    <div class="interests">
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Heterogeneous Integration</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Micromanufacturing</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Metrology &amp; On-Chip Metrology</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">MEMS Design &amp; Fabrication</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Photonics, Optics &amp; Photoacoustics</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Hardware for AI</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Educational Innovation</span></div>
+      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Business &amp; Deep-Tech Innovation</span></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Prior Research Experience</div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-org">OWO — Haptic Gaming Suits</div>
+        <div class="exp-role">Head of R&amp;D &amp; Hardware Development</div>
+        <p class="exp-desc">Led hardware development and a dedicated Use Case team across two Horizon Europe projects. Directed national-level research initiatives in 6G-IoT communication hardware and pulse-stimulation haptics — from concept through prototype validation.</p>
+      </div>
+      <div class="exp-meta">Spain<br>R&amp;D Leadership</div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-org">Precision Oriented Design <span style="font-family:'DM Mono',monospace;font-size:9.5px;color:var(--mid);letter-spacing:.06em">(DISCONTINUED)</span></div>
+        <div class="exp-role">Founder</div>
+        <p class="exp-desc">1st Prize Spin-Off at the University of Málaga. Developed nanopositioning devices targeting photonics testing applications. Established the technical and business foundations for precision-grade motion hardware at the university spin-off stage.</p>
+      </div>
+      <div class="exp-meta">Málaga, Spain<br>Deep-Tech Startup</div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-org">Scientific Outreach</div>
+        <div class="exp-role">Collaborator &amp; Event Organiser</div>
+        <p class="exp-desc">Featured on prime-time national media and local radio. Organised public-facing science events (+100 attendees/event) bridging active researchers and local communities — designing formats that make frontier research accessible.</p>
+      </div>
+      <div class="exp-meta">Various<br>Outreach</div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-label">Publications</div>
+
+    <div class="pub-item">
+      <div class="pub-bar"></div>
+      <div>
+        <div class="pub-venue">XXXV Jornadas Hispanolusas Congress &nbsp;·&nbsp; Ongoing</div>
+        <h4 class="pub-title">From Classroom to Market: BSc Thesis as an Entrepreneurial Project</h4>
+        <p class="pub-desc">Sets a reproducible framework for transforming undergraduate thesis projects into structured startup ventures, bridging academic research output and early-stage commercialisation.</p>
+      </div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-bar"></div>
+      <div>
+        <div class="pub-venue">TAEE Congress 2024 &nbsp;·&nbsp; IEEE Xplore</div>
+        <h4 class="pub-title">Design, Characterization, Prototyping and Digital Twin of a Stewart Platform</h4>
+        <p class="pub-desc">Describes the development of a new iteration of a Stewart platform for micropositioning, including characterisation methodology and a digital twin implementation.</p>
+        <a class="pub-doi" href="https://doi.org/10.1109/TAEE59541.2024.10604977" target="_blank" rel="noopener">DOI: 10.1109/TAEE59541.2024.10604977 ↗</a>
+      </div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-bar"></div>
+      <div>
+        <div class="pub-venue">TAEE Congress 2024 &nbsp;·&nbsp; IEEE Xplore</div>
+        <h4 class="pub-title">Use Case: Design, Characterization, Prototyping and Digital Twin of a Stewart Platform</h4>
+        <p class="pub-desc">Companion paper providing a detailed construction and replication guide for the Stewart platform system described in the primary publication above.</p>
+        <a class="pub-doi" href="https://doi.org/10.1109/TAEE59541.2024.10604976" target="_blank" rel="noopener">DOI: 10.1109/TAEE59541.2024.10604976 ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">Updated April 2026</span>
+    <a class="contact-link" href="mailto:your@email.com">Get in touch</a>
+  </footer>
+
+</div>
+</body>
+</html>
