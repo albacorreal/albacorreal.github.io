@@ -3,566 +3,418 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name — MSc Researcher</title>
+<title>Your Name — Researcher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f4f1eb;
-    --ink: #1a1a18;
-    --mid: #6b6860;
-    --rule: #d4cfc6;
-    --accent: #2a4a8c;
-    --accent2: #8c2a3a;
-    --tag-bg: #e8e4dc;
-  }
+:root {
+  --forest: #23332F;
+  --forest-deep: #16221f;
+  --forest-light: #2e4440;
+  --forest-mid: #3d5c57;
+  --sage: #5c8a82;
+  --mist: #a8c5bf;
+  --cream: #f0ede6;
+  --paper: #e8e3d8;
+  --warm-white: #f7f5f0;
+  --gold: #c9a96e;
+  --gold-light: #e0c799;
+  --text-on-dark: #c4bfb6;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Syne', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--forest-deep); color: var(--cream); font-family: var(--sans); overflow-x: hidden; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* CURSOR */
+#cursor { width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform .15s ease,background .2s;mix-blend-mode:difference; }
+#cursor.expand { transform:scale(4);background:var(--mist); }
 
-  html { scroll-behavior: smooth; }
+/* NAV */
+nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 48px;background:linear-gradient(to bottom,rgba(22,34,31,.97) 0%,transparent 100%); }
+.nav-logo { font-family:var(--serif);font-size:1.1rem;font-weight:300;color:var(--cream);letter-spacing:.04em;text-decoration:none; }
+.nav-logo em { font-style:italic;color:var(--gold); }
+.nav-links { display:flex;gap:32px;list-style:none; }
+.nav-links a { font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);text-decoration:none;transition:color .2s;padding:4px 0;position:relative;cursor:none; }
+.nav-links a::after { content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .25s ease; }
+.nav-links a:hover { color:var(--cream); }
+.nav-links a:hover::after { width:100%; }
+.nav-links a.active-link { color:var(--gold-light); }
+.nav-links a.active-link::after { width:100%;background:var(--gold); }
 
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.65;
-    font-size: 15px;
-  }
+/* PAGE SYSTEM */
+.page { display:none;min-height:100vh;opacity:0;transition:opacity .4s ease; }
+.page.active { display:block;animation:pageIn .45s ease forwards; }
+@keyframes pageIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-  /* ── GRAIN OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 100; opacity: .45;
-  }
+/* HERO */
+#page-home { display:flex;flex-direction:column;justify-content:center;min-height:100vh;position:relative;overflow:hidden; }
+.hero-bg { position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 50%,rgba(93,138,130,.13) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 10% 80%,rgba(201,169,110,.07) 0%,transparent 50%); }
+.hero-grid { position:absolute;inset:0;opacity:.06;background-image:linear-gradient(var(--sage) 1px,transparent 1px),linear-gradient(90deg,var(--sage) 1px,transparent 1px);background-size:60px 60px;animation:gridDrift 30s linear infinite; }
+@keyframes gridDrift { from{background-position:0 0} to{background-position:60px 60px} }
+.hero-content { position:relative;max-width:1100px;margin:0 auto;padding:0 48px;padding-top:120px; }
+.hero-label { font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:slideRight .7s .2s ease forwards; }
+.hero-name { font-family:var(--serif);font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1.0;letter-spacing:-.02em;color:var(--warm-white);opacity:0;animation:slideRight .7s .35s ease forwards; }
+.hero-name em { font-style:italic;font-weight:300;color:var(--gold-light);display:block; }
+.hero-sub { margin-top:28px;max-width:500px;font-size:14px;color:var(--text-on-dark);line-height:1.75;font-weight:400;opacity:0;animation:slideRight .7s .5s ease forwards; }
+.hero-pills { margin-top:32px;display:flex;flex-wrap:wrap;gap:10px;opacity:0;animation:slideRight .7s .65s ease forwards; }
+.pill { font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--forest-mid);color:var(--mist);border-radius:2px;transition:border-color .2s,color .2s;cursor:none; }
+.pill:hover { border-color:var(--gold);color:var(--gold-light); }
+.hero-cta { margin-top:56px;display:flex;gap:16px;opacity:0;animation:slideRight .7s .8s ease forwards; }
+.btn { font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:14px 28px;text-decoration:none;transition:all .25s ease;border:none;outline:none;cursor:none; }
+.btn-primary { background:var(--gold);color:var(--forest-deep); }
+.btn-primary:hover { background:var(--gold-light);transform:translateY(-2px); }
+.btn-ghost { background:transparent;color:var(--mist);border:1px solid var(--forest-mid); }
+.btn-ghost:hover { border-color:var(--mist);color:var(--cream); }
 
-  /* ── LAYOUT ── */
-  .page {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
+.hero-stats { position:absolute;right:48px;top:50%;transform:translateY(-40%);display:flex;flex-direction:column;gap:16px;opacity:0;animation:fadeIn .7s 1s ease forwards; }
+.stat-card { background:rgba(46,68,64,.45);border:1px solid rgba(93,138,130,.2);border-radius:4px;padding:20px 24px;min-width:155px;backdrop-filter:blur(8px);transition:border-color .2s,transform .2s;cursor:none; }
+.stat-card:hover { border-color:var(--gold);transform:translateX(-4px); }
+.stat-number { font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1; }
+.stat-label { font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-top:6px; }
 
-  /* ── HEADER ── */
-  header {
-    padding: 72px 0 56px;
-    border-bottom: 1px solid var(--rule);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 24px;
-    opacity: 0; animation: fadeUp .7s .1s ease forwards;
-  }
+.hero-scroll { position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--forest-mid);opacity:0;animation:fadeIn .7s 1.2s ease forwards; }
+.scroll-line { width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
 
-  .name {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 400;
-    letter-spacing: -.02em;
-    line-height: 1.1;
-  }
+/* INNER PAGES */
+.inner-page { max-width:1100px;margin:0 auto;padding:140px 48px 80px; }
+.page-header { margin-bottom:64px;border-bottom:1px solid rgba(93,138,130,.2);padding-bottom:32px; }
+.page-eyebrow { font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px; }
+.page-title { font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.1;color:var(--warm-white); }
+.page-title em { font-style:italic;color:var(--mist); }
 
-  .name em {
-    font-style: italic;
-    color: var(--accent);
-  }
+/* PROJECTS */
+.projects-grid { display:flex;flex-direction:column;gap:2px; }
+.proj-card { background:rgba(35,51,47,.5);border:1px solid rgba(93,138,130,.15);padding:40px 44px;transition:border-color .3s,background .3s;position:relative;overflow:hidden;cursor:none; }
+.proj-card::before { content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .35s ease; }
+.proj-card:hover { background:rgba(46,68,64,.7);border-color:rgba(93,138,130,.4); }
+.proj-card:hover::before { transform:scaleY(1); }
+.proj-num { font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--forest-mid);margin-bottom:16px; }
+.proj-title { font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--warm-white);line-height:1.25;margin-bottom:8px; }
+.proj-role { font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--gold);margin-bottom:16px; }
+.proj-body { color:var(--text-on-dark);font-size:14px;line-height:1.75;font-weight:400;max-width:680px; }
+.proj-tags { margin-top:20px;display:flex;flex-wrap:wrap;gap:8px; }
+.proj-tag { font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;background:rgba(22,34,31,.8);border:1px solid rgba(93,138,130,.2);color:var(--mist);border-radius:2px; }
 
-  .tagline {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 300;
-    color: var(--mid);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-top: 12px;
-  }
+/* COURSES */
+.courses-intro { color:var(--text-on-dark);font-size:14.5px;line-height:1.75;margin-bottom:48px;max-width:600px; }
+.courses-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px; }
+.course-card { background:rgba(35,51,47,.4);border:1px solid rgba(93,138,130,.15);border-radius:3px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;transition:background .2s,border-color .2s,transform .2s;cursor:none; }
+.course-card:hover { background:rgba(46,68,64,.6);border-color:rgba(201,169,110,.3);transform:translateY(-2px); }
+.course-code { font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--gold);white-space:nowrap; }
+.course-name { font-size:13px;font-weight:500;color:var(--cream);line-height:1.35; }
 
-  .header-meta {
-    text-align: right;
-    font-family: 'DM Mono', monospace;
-    font-size: 10.5px;
-    color: var(--mid);
-    letter-spacing: .06em;
-    line-height: 1.8;
-  }
+/* EXPERIENCE */
+.timeline { position:relative;padding-left:32px; }
+.timeline::before { content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--gold),rgba(93,138,130,.3),transparent); }
+.timeline-item { position:relative;padding-bottom:52px; }
+.timeline-item:last-child { padding-bottom:0; }
+.timeline-dot { position:absolute;left:-36px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--gold);border:2px solid var(--forest-deep);box-shadow:0 0 0 4px rgba(201,169,110,.2); }
+.tl-org { font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--warm-white);margin-bottom:4px; }
+.tl-role { font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--gold);margin-bottom:8px; }
+.tl-loc { font-family:var(--mono);font-size:9.5px;color:var(--forest-mid);letter-spacing:.08em;margin-bottom:12px; }
+.tl-desc { color:var(--text-on-dark);font-size:13.5px;line-height:1.75;max-width:640px; }
+.outreach-band { margin-top:64px;background:rgba(35,51,47,.5);border:1px solid rgba(93,138,130,.2);border-radius:4px;padding:32px 40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center; }
+.outreach-title { font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--warm-white);margin-bottom:6px; }
+.outreach-desc { color:var(--text-on-dark);font-size:13.5px;line-height:1.7; }
+.outreach-stat { font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--gold-light);text-align:center;line-height:1; }
+.outreach-stat span { display:block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--mist);margin-top:6px; }
 
-  /* ── NAV DOTS ── */
-  nav {
-    padding: 20px 0;
-    display: flex;
-    gap: 28px;
-    border-bottom: 1px solid var(--rule);
-    opacity: 0; animation: fadeUp .7s .25s ease forwards;
-  }
+/* PUBLICATIONS */
+.pubs-list { display:flex;flex-direction:column;gap:2px; }
+.pub-card { background:rgba(35,51,47,.4);border:1px solid rgba(93,138,130,.15);padding:36px 40px;transition:background .2s,border-color .2s; }
+.pub-card:hover { background:rgba(46,68,64,.6);border-color:rgba(93,138,130,.35); }
+.pub-venue-row { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:16px; }
+.pub-venue { font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold); }
+.pub-status { font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border:1px solid rgba(201,169,110,.3);color:var(--gold);border-radius:2px;white-space:nowrap; }
+.pub-title { font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--warm-white);line-height:1.3;margin-bottom:12px; }
+.pub-desc { color:var(--text-on-dark);font-size:13.5px;line-height:1.75;margin-bottom:16px; }
+.pub-doi-link { font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--sage);text-decoration:none;border-bottom:1px solid rgba(93,138,130,.3);padding-bottom:1px;transition:color .2s,border-color .2s; }
+.pub-doi-link:hover { color:var(--gold-light);border-color:var(--gold); }
 
-  nav a {
-    font-family: 'DM Mono', monospace;
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--mid);
-    text-decoration: none;
-    transition: color .2s;
-  }
+/* INTERESTS */
+.interests-layout { display:grid;grid-template-columns:1fr 1fr;gap:48px; }
+.int-group-title { font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:24px; }
+.int-list { list-style:none;display:flex;flex-direction:column;gap:10px; }
+.int-list li { display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(35,51,47,.4);border:1px solid rgba(93,138,130,.12);border-radius:3px;font-size:14px;font-weight:500;color:var(--cream);transition:background .2s,border-color .2s,transform .2s;cursor:none; }
+.int-list li:hover { background:rgba(46,68,64,.7);border-color:rgba(201,169,110,.25);transform:translateX(4px); }
+.int-list li::before { content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0; }
 
-  nav a:hover { color: var(--ink); }
+/* REVEAL ANIMATION */
+.reveal { opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease; }
+.reveal.visible { opacity:1;transform:translateY(0); }
 
-  /* ── SECTIONS ── */
-  section {
-    padding: 60px 0;
-    border-bottom: 1px solid var(--rule);
-    opacity: 0; animation: fadeUp .7s ease forwards;
-  }
+/* ANIMATIONS */
+@keyframes slideRight { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:translateX(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-  section:nth-child(3) { animation-delay: .35s; }
-  section:nth-child(4) { animation-delay: .45s; }
-  section:nth-child(5) { animation-delay: .55s; }
-  section:nth-child(6) { animation-delay: .65s; }
-  section:nth-child(7) { animation-delay: .75s; }
-
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  /* ── PROJECT CARDS ── */
-  .project {
-    padding: 28px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .project:last-child { border-bottom: none; }
-
-  .project-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 10px;
-  }
-
-  .project-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.3;
-  }
-
-  .project-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 9.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    background: var(--tag-bg);
-    padding: 4px 10px;
-    border-radius: 2px;
-    white-space: nowrap;
-    color: var(--mid);
-    flex-shrink: 0;
-  }
-
-  .project-role {
-    font-family: 'DM Mono', monospace;
-    font-size: 10.5px;
-    color: var(--accent);
-    letter-spacing: .06em;
-    margin-bottom: 10px;
-  }
-
-  .project-desc {
-    color: var(--mid);
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
-  .project-tags {
-    margin-top: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 9.5px;
-    letter-spacing: .08em;
-    background: var(--tag-bg);
-    padding: 3px 9px;
-    border-radius: 2px;
-    color: var(--ink);
-    opacity: .7;
-  }
-
-  /* ── INTERESTS GRID ── */
-  .interests {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  .interest-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 16px;
-    background: var(--tag-bg);
-    border-radius: 3px;
-    transition: background .2s;
-  }
-
-  .interest-item:hover { background: #ddd9d0; }
-
-  .interest-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-
-  .interest-item:nth-child(2n) .interest-dot { background: var(--accent2); }
-
-  .interest-text {
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.3;
-  }
-
-  /* ── EXPERIENCE ── */
-  .exp-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .exp-item:last-child { border-bottom: none; }
-
-  .exp-org {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-
-  .exp-role {
-    font-family: 'DM Mono', monospace;
-    font-size: 10.5px;
-    color: var(--accent);
-    letter-spacing: .06em;
-    margin-bottom: 8px;
-  }
-
-  .exp-desc {
-    color: var(--mid);
-    font-size: 13.5px;
-    line-height: 1.7;
-  }
-
-  .exp-meta {
-    text-align: right;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: .06em;
-    line-height: 1.8;
-    white-space: nowrap;
-  }
-
-  /* ── PUBLICATIONS ── */
-  .pub-item {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--rule);
-    display: grid;
-    grid-template-columns: 3px 1fr;
-    gap: 20px;
-    align-items: start;
-  }
-
-  .pub-item:last-child { border-bottom: none; }
-
-  .pub-bar {
-    width: 3px;
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    align-self: stretch;
-  }
-
-  .pub-item:nth-child(2) .pub-bar { background: var(--accent2); }
-
-  .pub-venue {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 6px;
-  }
-
-  .pub-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.35;
-    margin-bottom: 8px;
-  }
-
-  .pub-desc {
-    color: var(--mid);
-    font-size: 13.5px;
-    line-height: 1.65;
-    margin-bottom: 10px;
-  }
-
-  .pub-doi {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    text-decoration: none;
-    letter-spacing: .04em;
-  }
-
-  .pub-doi:hover { text-decoration: underline; }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 40px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    opacity: 0; animation: fadeUp .7s .85s ease forwards;
-  }
-
-  .footer-note {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: .08em;
-  }
-
-  .contact-link {
-    font-family: 'DM Mono', monospace;
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-    padding: 8px 18px;
-    border: 1px solid var(--ink);
-    transition: background .2s, color .2s;
-  }
-
-  .contact-link:hover {
-    background: var(--ink);
-    color: var(--bg);
-  }
-
-  /* ── ANIMATION ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .page { padding: 0 20px; }
-    header { grid-template-columns: 1fr; }
-    .header-meta { text-align: left; }
-    .exp-item { grid-template-columns: 1fr; }
-    .exp-meta { text-align: left; }
-    .project-header { flex-direction: column; }
-    footer { flex-direction: column; gap: 16px; }
-  }
+/* RESPONSIVE */
+@media (max-width:768px) {
+  nav { padding:20px 24px; }
+  .nav-links { gap:18px; }
+  .hero-content,.inner-page { padding-left:24px;padding-right:24px; }
+  .hero-stats { display:none; }
+  .interests-layout { grid-template-columns:1fr; }
+  .outreach-band { grid-template-columns:1fr; }
+  .proj-card,.pub-card { padding:28px 24px; }
+}
+@media (max-width:480px) {
+  .nav-links { display:none; }
+}
 </style>
 </head>
 <body>
-<div class="page">
 
-  <!-- HEADER -->
-  <header>
-    <div>
-      <h1 class="name">Your <em>Name</em></h1>
-      <p class="tagline">MSc Researcher &nbsp;·&nbsp; Micromanufacturing &nbsp;·&nbsp; Heterogeneous Integration &nbsp;·&nbsp; Photonics</p>
+<div id="cursor"></div>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home');return false;">Your <em>Name</em></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home');return false;" data-page="home">Home</a></li>
+    <li><a href="#" onclick="showPage('projects');return false;" data-page="projects">Research</a></li>
+    <li><a href="#" onclick="showPage('courses');return false;" data-page="courses">Courses</a></li>
+    <li><a href="#" onclick="showPage('experience');return false;" data-page="experience">Experience</a></li>
+    <li><a href="#" onclick="showPage('publications');return false;" data-page="publications">Publications</a></li>
+    <li><a href="#" onclick="showPage('interests');return false;" data-page="interests">Interests</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <p class="hero-label">MSc Researcher · TU Delft</p>
+    <h1 class="hero-name">Your<br><em>Name Here</em></h1>
+    <p class="hero-sub">Working at the intersection of micromanufacturing, heterogeneous integration, and photonics. Focused on MEMS, advanced packaging, and hardware for AI datacenters.</p>
+    <div class="hero-pills">
+      <span class="pill">MEMS</span>
+      <span class="pill">PICs &amp; EICs</span>
+      <span class="pill">TFLN</span>
+      <span class="pill">Thin Film</span>
+      <span class="pill">On-Chip Metrology</span>
+      <span class="pill">AI Hardware</span>
     </div>
-    <div class="header-meta">
-      MSc Student<br>
-      TU Delft / Your University<br>
-      Netherlands
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#" onclick="showPage('projects');return false;">View Research</a>
+      <a class="btn btn-ghost" href="#" onclick="showPage('publications');return false;">Publications</a>
     </div>
-  </header>
-
-  <!-- NAV -->
-  <nav>
-    <a href="#projects">Projects</a>
-    <a href="#interests">Interests</a>
-    <a href="#experience">Experience</a>
-    <a href="#publications">Publications</a>
-  </nav>
-
-  <!-- MSC PROJECTS -->
-  <section id="projects">
-    <div class="section-label">MSc Projects</div>
-
-    <div class="project">
-      <div class="project-header">
-        <h3 class="project-title">Design of a MEMS Accelerometer</h3>
-        <span class="project-badge">In Progress</span>
-      </div>
-      <div class="project-role">K Layout · Design &amp; Manufacturing Manager</div>
-      <p class="project-desc">
-        Designing and managing the fabrication pipeline for a MEMS accelerometer. Currently developing an open-source library for MEMS devices with a particular focus on on-chip metrology — including Vernier scale structures for precise dimensional characterization within the die.
-      </p>
-      <div class="project-tags">
-        <span class="tag">MEMS</span>
-        <span class="tag">K Layout</span>
-        <span class="tag">On-Chip Metrology</span>
-        <span class="tag">Vernier Scales</span>
-        <span class="tag">Open Source</span>
-      </div>
-    </div>
-
-    <div class="project">
-      <div class="project-header">
-        <h3 class="project-title">Heterogeneous Integration of PICs &amp; EICs</h3>
-        <span class="project-badge">Literature / Feasibility</span>
-      </div>
-      <div class="project-role">Advanced Packaging (ETxxxx)</div>
-      <p class="project-desc">
-        Literature review and feasibility analysis of co-integration strategies for Photonic and Electronic Integrated Circuits. Focused on high-frequency solutions — specifically Thin-Film Lithium Niobate (TFLN) — with a thorough examination of Optical Circuit Switches (OCS) as a use case for next-generation AI datacenter interconnects.
-      </p>
-      <div class="project-tags">
-        <span class="tag">PICs &amp; EICs</span>
-        <span class="tag">TFLN</span>
-        <span class="tag">OCS</span>
-        <span class="tag">AI Datacenters</span>
-        <span class="tag">Advanced Packaging</span>
-      </div>
-    </div>
-
-    <div class="project">
-      <div class="project-header">
-        <h3 class="project-title">Manufacturing of Perovskite–CIGS Solar Cells</h3>
-        <span class="project-badge">Thin Film Materials</span>
-      </div>
-      <div class="project-role">Manufacturing Scalability Research</div>
-      <p class="project-desc">
-        Investigating the manufacturing scalability of Perovskite and CIGS tandem thin-film solar cells. Research focuses on alternatives to ultrasonic spin-coating to achieve conformal deposition at scale, alongside techniques for reducing the pinhole effect — a key yield and reliability concern in perovskite absorber layers.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Perovskite</span>
-        <span class="tag">CIGS</span>
-        <span class="tag">Thin Film</span>
-        <span class="tag">Scalability</span>
-        <span class="tag">Conformality</span>
-        <span class="tag">Pinhole Reduction</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- INTERESTS -->
-  <section id="interests">
-    <div class="section-label">Research Interests</div>
-    <div class="interests">
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Heterogeneous Integration</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Micromanufacturing</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Metrology &amp; On-Chip Metrology</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">MEMS Design &amp; Fabrication</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Photonics, Optics &amp; Photoacoustics</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Hardware for AI</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Educational Innovation</span></div>
-      <div class="interest-item"><div class="interest-dot"></div><span class="interest-text">Business &amp; Deep-Tech Innovation</span></div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-label">Prior Research Experience</div>
-
-    <div class="exp-item">
-      <div>
-        <div class="exp-org">OWO — Haptic Gaming Suits</div>
-        <div class="exp-role">Head of R&amp;D &amp; Hardware Development</div>
-        <p class="exp-desc">Led hardware development and a dedicated Use Case team across two Horizon Europe projects. Directed national-level research initiatives in 6G-IoT communication hardware and pulse-stimulation haptics — from concept through prototype validation.</p>
-      </div>
-      <div class="exp-meta">Spain<br>R&amp;D Leadership</div>
-    </div>
-
-    <div class="exp-item">
-      <div>
-        <div class="exp-org">Precision Oriented Design <span style="font-family:'DM Mono',monospace;font-size:9.5px;color:var(--mid);letter-spacing:.06em">(DISCONTINUED)</span></div>
-        <div class="exp-role">Founder</div>
-        <p class="exp-desc">1st Prize Spin-Off at the University of Málaga. Developed nanopositioning devices targeting photonics testing applications. Established the technical and business foundations for precision-grade motion hardware at the university spin-off stage.</p>
-      </div>
-      <div class="exp-meta">Málaga, Spain<br>Deep-Tech Startup</div>
-    </div>
-
-    <div class="exp-item">
-      <div>
-        <div class="exp-org">Scientific Outreach</div>
-        <div class="exp-role">Collaborator &amp; Event Organiser</div>
-        <p class="exp-desc">Featured on prime-time national media and local radio. Organised public-facing science events (+100 attendees/event) bridging active researchers and local communities — designing formats that make frontier research accessible.</p>
-      </div>
-      <div class="exp-meta">Various<br>Outreach</div>
-    </div>
-  </section>
-
-  <!-- PUBLICATIONS -->
-  <section id="publications">
-    <div class="section-label">Publications</div>
-
-    <div class="pub-item">
-      <div class="pub-bar"></div>
-      <div>
-        <div class="pub-venue">XXXV Jornadas Hispanolusas Congress &nbsp;·&nbsp; Ongoing</div>
-        <h4 class="pub-title">From Classroom to Market: BSc Thesis as an Entrepreneurial Project</h4>
-        <p class="pub-desc">Sets a reproducible framework for transforming undergraduate thesis projects into structured startup ventures, bridging academic research output and early-stage commercialisation.</p>
-      </div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-bar"></div>
-      <div>
-        <div class="pub-venue">TAEE Congress 2024 &nbsp;·&nbsp; IEEE Xplore</div>
-        <h4 class="pub-title">Design, Characterization, Prototyping and Digital Twin of a Stewart Platform</h4>
-        <p class="pub-desc">Describes the development of a new iteration of a Stewart platform for micropositioning, including characterisation methodology and a digital twin implementation.</p>
-        <a class="pub-doi" href="https://doi.org/10.1109/TAEE59541.2024.10604977" target="_blank" rel="noopener">DOI: 10.1109/TAEE59541.2024.10604977 ↗</a>
-      </div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-bar"></div>
-      <div>
-        <div class="pub-venue">TAEE Congress 2024 &nbsp;·&nbsp; IEEE Xplore</div>
-        <h4 class="pub-title">Use Case: Design, Characterization, Prototyping and Digital Twin of a Stewart Platform</h4>
-        <p class="pub-desc">Companion paper providing a detailed construction and replication guide for the Stewart platform system described in the primary publication above.</p>
-        <a class="pub-doi" href="https://doi.org/10.1109/TAEE59541.2024.10604976" target="_blank" rel="noopener">DOI: 10.1109/TAEE59541.2024.10604976 ↗</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-note">Updated April 2026</span>
-    <a class="contact-link" href="mailto:your@email.com">Get in touch</a>
-  </footer>
-
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">MSc Projects</div></div>
+    <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Publications</div></div>
+    <div class="stat-card"><div class="stat-number">16</div><div class="stat-label">Courses</div></div>
+    <div class="stat-card"><div class="stat-number">1×</div><div class="stat-label">Spin-Off Prize</div></div>
+  </div>
+  <div class="hero-scroll"><span>Explore</span><div class="scroll-line"></div></div>
 </div>
+
+<!-- RESEARCH -->
+<div id="page-projects" class="page">
+  <div class="inner-page">
+    <div class="page-header reveal">
+      <p class="page-eyebrow">01 — Research</p>
+      <h2 class="page-title">MSc <em>Projects</em></h2>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 01</div>
+        <h3 class="proj-title">Design of a MEMS Accelerometer</h3>
+        <div class="proj-role">K Layout · Design &amp; Manufacturing Manager</div>
+        <p class="proj-body">Designing and managing the fabrication pipeline for a MEMS accelerometer in K Layout. Currently developing an open-source library for MEMS devices, with particular focus on on-chip metrology — including Vernier scale structures for precise dimensional characterisation directly within the die.</p>
+        <div class="proj-tags"><span class="proj-tag">MEMS</span><span class="proj-tag">K Layout</span><span class="proj-tag">On-Chip Metrology</span><span class="proj-tag">Vernier Scales</span><span class="proj-tag">Open Source</span></div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 02</div>
+        <h3 class="proj-title">Heterogeneous Integration of PICs &amp; EICs</h3>
+        <div class="proj-role">Advanced Packaging · ET4391 — Literature Review &amp; Feasibility Analysis</div>
+        <p class="proj-body">Comprehensive literature review and feasibility analysis of co-integration strategies for Photonic and Electronic ICs. Focused on high-frequency solutions — specifically Thin-Film Lithium Niobate (TFLN) — with a thorough examination of Optical Circuit Switches (OCS) as a use case for next-generation AI datacenter interconnects.</p>
+        <div class="proj-tags"><span class="proj-tag">PICs &amp; EICs</span><span class="proj-tag">TFLN</span><span class="proj-tag">Optical Circuit Switches</span><span class="proj-tag">AI Datacenters</span><span class="proj-tag">Advanced Packaging</span></div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-num">Project 03</div>
+        <h3 class="proj-title">Manufacturing of Perovskite–CIGS Solar Cells</h3>
+        <div class="proj-role">Thin Film Materials · Manufacturing Scalability</div>
+        <p class="proj-body">Investigating the manufacturing scalability of Perovskite and CIGS tandem thin-film solar cells. Research explores alternatives to ultrasonic spin-coating for conformal deposition at industrial scale, alongside techniques for pinhole effect reduction — a critical yield and reliability challenge in perovskite absorber layers.</p>
+        <div class="proj-tags"><span class="proj-tag">Perovskite</span><span class="proj-tag">CIGS</span><span class="proj-tag">Thin Film</span><span class="proj-tag">Scalability</span><span class="proj-tag">Conformality</span><span class="proj-tag">Pinhole Reduction</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COURSES -->
+<div id="page-courses" class="page">
+  <div class="inner-page">
+    <div class="page-header reveal">
+      <p class="page-eyebrow">02 — Academic</p>
+      <h2 class="page-title">Coursed <em>Subjects</em></h2>
+    </div>
+    <p class="courses-intro reveal">MSc curriculum at TU Delft spanning MEMS design, micromanufacturing, advanced packaging, photonics, precision engineering, mechatronics, nonlinear mechanics, and ethics of AI.</p>
+    <div class="courses-grid">
+      <div class="course-card reveal"><span class="course-code">AP3222</span><span class="course-name">Nanotechnology</span></div>
+      <div class="course-card reveal"><span class="course-code">ET4260</span><span class="course-name">Microsystem Design and Modelling</span></div>
+      <div class="course-card reveal"><span class="course-code">ET4391</span><span class="course-name">Advanced Microelectronics Packaging</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46000</span><span class="course-name">Nonlinear Mechanics</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46006</span><span class="course-name">Physics for Mechanical Engineers</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46007</span><span class="course-name">Measurement Technology</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46015</span><span class="course-name">Precision Mechanism Design</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46020</span><span class="course-name">Micro &amp; Nanosystems Design and Fabrication incl. MEMS Lab</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46025</span><span class="course-name">Manufacturing for the Micro and Nano Scale</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46055</span><span class="course-name">Engineering Dynamics</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46065</span><span class="course-name">Thin Film Materials</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46085</span><span class="course-name">Mechatronic System Design</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46110</span><span class="course-name">Intro Lab PME</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46115</span><span class="course-name">Compliant Mechanisms</span></div>
+      <div class="course-card reveal"><span class="course-code">ME46400</span><span class="course-name">Applied Optics for Engineers</span></div>
+      <div class="course-card reveal"><span class="course-code">TPM015B</span><span class="course-name">Ethics of AI</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div id="page-experience" class="page">
+  <div class="inner-page">
+    <div class="page-header reveal">
+      <p class="page-eyebrow">03 — Background</p>
+      <h2 class="page-title">Prior <em>Experience</em></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="tl-org">OWO — Haptic Gaming Suits</div>
+        <div class="tl-role">Head of R&amp;D &amp; Hardware Development</div>
+        <div class="tl-loc">Spain</div>
+        <p class="tl-desc">Led hardware development and a dedicated Use Case team across two Horizon Europe projects. Directed national-level research initiatives in 6G-IoT communication hardware and pulse-stimulation haptics — from concept definition through prototype validation.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="tl-org">Precision Oriented Design <span style="font-size:.75rem;color:var(--forest-mid)">(Discontinued)</span></div>
+        <div class="tl-role">Founder</div>
+        <div class="tl-loc">Málaga, Spain</div>
+        <p class="tl-desc">1st Prize Spin-Off at the University of Málaga. Developed nanopositioning devices targeting photonics testing applications. Established the technical and early commercial foundations for precision-grade motion hardware at the university spin-off stage.</p>
+      </div>
+    </div>
+    <div class="outreach-band reveal">
+      <div>
+        <div class="outreach-title">Scientific Outreach — Various Collaborations</div>
+        <p class="outreach-desc">Featured on prime-time national media and local radio. Designed and organised public-facing science events connecting active researchers with local communities, making frontier research accessible to non-specialist audiences.</p>
+      </div>
+      <div><div class="outreach-stat">100+<span>attendees / event</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PUBLICATIONS -->
+<div id="page-publications" class="page">
+  <div class="inner-page">
+    <div class="page-header reveal">
+      <p class="page-eyebrow">04 — Output</p>
+      <h2 class="page-title">Publications &amp; <em>Papers</em></h2>
+    </div>
+    <div class="pubs-list">
+      <div class="pub-card reveal">
+        <div class="pub-venue-row"><span class="pub-venue">XXXV Jornadas Hispanolusas Congress</span><span class="pub-status">Ongoing</span></div>
+        <h3 class="pub-title">From Classroom to Market: BSc Thesis as an Entrepreneurial Project</h3>
+        <p class="pub-desc">Establishes a reproducible framework for transforming undergraduate thesis projects into structured startup ventures, bridging academic research output and early-stage commercialisation.</p>
+      </div>
+      <div class="pub-card reveal">
+        <div class="pub-venue-row"><span class="pub-venue">TAEE Congress 2024 · IEEE Xplore</span><span class="pub-status">Published</span></div>
+        <h3 class="pub-title">Design, Characterization, Prototyping and Digital Twin of a Stewart Platform</h3>
+        <p class="pub-desc">Describes the development of a new iteration of a Stewart platform for micropositioning applications, including full characterisation methodology and a digital twin implementation for model-based control.</p>
+        <a class="pub-doi-link" href="https://doi.org/10.1109/TAEE59541.2024.10604977" target="_blank" rel="noopener">DOI: 10.1109/TAEE59541.2024.10604977 ↗</a>
+      </div>
+      <div class="pub-card reveal">
+        <div class="pub-venue-row"><span class="pub-venue">TAEE Congress 2024 · IEEE Xplore</span><span class="pub-status">Published</span></div>
+        <h3 class="pub-title">Use Case: Design, Characterization, Prototyping and Digital Twin of a Stewart Platform</h3>
+        <p class="pub-desc">Companion paper providing a detailed construction and replication guide for the Stewart platform system, enabling independent reproduction and adaptation of the micropositioning mechanism.</p>
+        <a class="pub-doi-link" href="https://doi.org/10.1109/TAEE59541.2024.10604976" target="_blank" rel="noopener">DOI: 10.1109/TAEE59541.2024.10604976 ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERESTS -->
+<div id="page-interests" class="page">
+  <div class="inner-page">
+    <div class="page-header reveal">
+      <p class="page-eyebrow">05 — Focus</p>
+      <h2 class="page-title">Research <em>Interests</em></h2>
+    </div>
+    <div class="interests-layout">
+      <div>
+        <div class="int-group-title">Technical</div>
+        <ul class="int-list">
+          <li>Heterogeneous Integration</li>
+          <li>Micromanufacturing</li>
+          <li>Metrology &amp; On-Chip Metrology</li>
+          <li>MEMS Design &amp; Fabrication</li>
+          <li>Photonics, Optics &amp; Photoacoustics</li>
+          <li>Hardware for AI</li>
+        </ul>
+      </div>
+      <div>
+        <div class="int-group-title">Strategic</div>
+        <ul class="int-list">
+          <li>Educational Innovation</li>
+          <li>Business &amp; Deep-Tech Innovation</li>
+          <li>Technology Transfer</li>
+          <li>Scientific Outreach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = (e.clientX - 5) + 'px';
+  cursor.style.top  = (e.clientY - 5) + 'px';
+});
+document.querySelectorAll('a,button,.proj-card,.course-card,.int-list li,.stat-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+});
+
+// PAGE SWITCHING
+let current = 'home';
+function showPage(id) {
+  if (id === current) return;
+  const prev = document.getElementById('page-' + current);
+  if (prev) { prev.classList.remove('active'); prev.style.display = 'none'; }
+  current = id;
+  const next = document.getElementById('page-' + id);
+  if (!next) return;
+  next.style.display = 'block';
+  requestAnimationFrame(() => {
+    next.classList.add('active');
+    window.scrollTo({ top: 0 });
+    setTimeout(revealVisible, 80);
+  });
+  // update nav highlight
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active-link', a.dataset.page === id);
+  });
+}
+
+// REVEAL
+function revealVisible() {
+  document.querySelectorAll('#page-' + current + ' .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 55);
+  });
+}
+
+// Initial
+window.addEventListener('load', () => {
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.dataset.page === 'home') a.classList.add('active-link');
+  });
+  revealVisible();
+});
+</script>
 </body>
 </html>
