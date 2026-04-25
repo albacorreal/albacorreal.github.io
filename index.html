@@ -102,10 +102,27 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
 /* COURSES */
 .courses-intro { color:var(--text-on-dark);font-size:14.5px;line-height:1.75;margin-bottom:48px;max-width:600px; }
 .courses-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px; }
-.course-card { background:rgba(35,51,47,.4);border:1px solid rgba(93,138,130,.15);border-radius:3px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;transition:background .2s,border-color .2s,transform .2s;cursor:none; }
+.course-card { background:rgba(35,51,47,.4);border:1px solid rgba(93,138,130,.15);border-radius:3px;padding:18px 20px;display:grid;grid-template-columns:auto 1fr;column-gap:16px;row-gap:0;align-items:start;transition:background .2s,border-color .2s,transform .2s;cursor:none; }
 .course-card:hover { background:rgba(46,68,64,.6);border-color:rgba(201,169,110,.3);transform:translateY(-2px); }
-.course-code { font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--gold);white-space:nowrap; }
+.course-code { font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--gold);white-space:nowrap;padding-top:2px; }
 .course-name { font-size:13px;font-weight:500;color:var(--cream);line-height:1.35; }
+.course-ects { font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--forest-mid);margin-top:3px;text-transform:uppercase; }
+.course-desc { grid-column:2;font-size:12px;color:var(--text-on-dark);line-height:1.6;margin-top:8px;font-weight:400;opacity:.85; }
+
+/* BSc SECTION */
+.bsc-section { margin-top:72px; }
+.bsc-divider { font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px; }
+.bsc-divider::after { content:'';flex:1;height:1px;background:rgba(93,138,130,.2); }
+.bsc-degree { font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--warm-white);line-height:1.25;margin-bottom:6px; }
+.bsc-school { font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase; }
+.bsc-cols { display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px; }
+.bsc-block-title { font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:14px; }
+.honours-list { display:flex;flex-wrap:wrap;gap:8px; }
+.honours-tag { font-family:var(--mono);font-size:9px;letter-spacing:.08em;padding:5px 12px;background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.25);color:var(--gold-light);border-radius:2px; }
+.skills-list { display:flex;flex-wrap:wrap;gap:8px; }
+.skill-tag { font-family:var(--mono);font-size:9px;letter-spacing:.08em;padding:5px 12px;background:rgba(35,51,47,.5);border:1px solid rgba(93,138,130,.2);color:var(--mist);border-radius:2px;transition:border-color .2s,color .2s; }
+.skill-tag:hover { border-color:rgba(93,138,130,.5);color:var(--cream); }
+@media (max-width:768px) { .bsc-cols { grid-template-columns:1fr; gap:24px; } }
 
 /* EXPERIENCE */
 .timeline { position:relative;padding-left:32px; }
@@ -151,100 +168,18 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
 @keyframes slideRight { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:translateX(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-/* ── HAMBURGER BUTTON (hidden on desktop) ── */
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 40px; height: 40px;
-  background: none; border: none;
-  padding: 6px;
-  z-index: 200;
-  flex-shrink: 0;
-  cursor: pointer;
+/* RESPONSIVE */
+@media (max-width:768px) {
+  nav { padding:20px 24px; }
+  .nav-links { gap:18px; }
+  .hero-content,.inner-page { padding-left:24px;padding-right:24px; }
+  .hero-stats { display:none; }
+  .interests-layout { grid-template-columns:1fr; }
+  .outreach-band { grid-template-columns:1fr; }
+  .proj-card,.pub-card { padding:28px 24px; }
 }
-.nav-hamburger span {
-  display: block;
-  width: 22px; height: 1.5px;
-  background: var(--mist);
-  border-radius: 2px;
-  transition: transform .3s ease, opacity .3s ease, background .2s;
-  transform-origin: center;
-}
-.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: var(--gold); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: var(--gold); }
-
-/* ── MOBILE FULLSCREEN DRAWER ── */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(16, 26, 23, 0.97);
-  backdrop-filter: blur(14px);
-  z-index: 150;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .3s ease;
-}
-.mobile-menu.open {
-  display: flex;
-  opacity: 1;
-  pointer-events: all;
-}
-.mobile-menu a {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 8vw, 3rem);
-  font-weight: 300;
-  color: var(--text-on-dark);
-  text-decoration: none;
-  padding: 10px 0;
-  letter-spacing: .02em;
-  transition: color .2s;
-}
-.mobile-menu a:hover,
-.mobile-menu a.active-mobile { color: var(--warm-white); }
-.mobile-menu a em { font-style: normal; color: var(--gold); }
-.mobile-menu-footer {
-  position: absolute;
-  bottom: 36px;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--forest-mid);
-}
-
-/* ── RESPONSIVE (desktop untouched above 768px) ── */
-@media (max-width: 768px) {
-  #cursor { display: none; }
-  *, *::before { cursor: auto !important; }
-
-  nav { padding: 20px 24px; }
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
-
-  .hero-content { padding-left: 24px; padding-right: 24px; padding-top: 100px; }
-  .hero-stats { display: none; }
-  .hero-name { font-size: clamp(2.8rem, 11vw, 5rem); }
-  .hero-cta { flex-direction: column; gap: 12px; }
-  .btn { text-align: center; }
-
-  .inner-page { padding: 100px 24px 60px; }
-  .page-header { margin-bottom: 40px; }
-
-  .proj-card { padding: 28px 22px; }
-  .courses-grid { grid-template-columns: 1fr; }
-  .bsc-cols { grid-template-columns: 1fr; gap: 24px; }
-  .outreach-band { grid-template-columns: 1fr; text-align: center; }
-  .pub-card { padding: 28px 22px; }
-  .pub-venue-row { flex-direction: column; gap: 8px; }
-  .interests-layout { grid-template-columns: 1fr; gap: 32px; }
+@media (max-width:480px) {
+  .nav-links { display:none; }
 }
 </style>
 </head>
@@ -262,30 +197,16 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
     <li><a href="#" onclick="showPage('publications');return false;" data-page="publications">Publications</a></li>
     <li><a href="#" onclick="showPage('interests');return false;" data-page="interests">Interests</a></li>
   </ul>
-  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
-
-<!-- MOBILE DRAWER -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#" data-mobile-page="home"          onclick="mobileNav('home');return false;">Home</a>
-  <a href="#" data-mobile-page="projects"      onclick="mobileNav('projects');return false;"><em>Projects</em></a>
-  <a href="#" data-mobile-page="courses"       onclick="mobileNav('courses');return false;"><em>Courses</em></a>
-  <a href="#" data-mobile-page="experience"    onclick="mobileNav('experience');return false;"><em>Experience</em></a>
-  <a href="#" data-mobile-page="publications"  onclick="mobileNav('publications');return false;"><em>Publications</em></a>
-  <a href="#" data-mobile-page="interests"     onclick="mobileNav('interests');return false;"><em>Interests</em></a>
-  <div class="mobile-menu-footer">Alba Correal · TU Delft</div>
-</div>
 
 <!-- HOME -->
 <div id="page-home" class="page active">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <p class="hero-label">HTE Student · TU Delft</p>
+    <p class="hero-label">MSc High-Tech Engineering Student · TU Delft</p>
     <h1 class="hero-name">Alba<br><em>Correal Olmo</em></h1>
-    <p class="hero-sub">Proactive student with research and industry experience working at the intersection of MNE, OPT &amp DMN </p>
+    <p class="hero-sub">Proactive student with research and industry experience working at the intersection of Micro-Nano Engineering, Optics for Technology &amp Dynamics for Micro- and Nanosystems </p>
     <div class="hero-pills">
       <span class="pill">MEMS</span>
       <span class="pill">PICs &amp; EICs</span>
@@ -320,28 +241,28 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
         <div class="proj-num">Project 01</div>
         <h3 class="proj-title">Design of a MEMS Accelerometer</h3>
         <div class="proj-role"> Microsystems Design · (ME46020) — K Layout Design &amp; Manufacturing Manager</div>
-        <p class="proj-body">Designing and managing the fabrication pipeline for a MEMS accelerometer in K Layout. Currently developing an open-source library for MEMS devices, with particular focus on on-chip metrology — including Vernier scale structures for precise dimensional characterisation directly within the die.</p>
+        <p class="proj-body">Designing and managing the fabrication pipeline for a MEMS accelerometer in K Layout. Currently developing an open-source library for MEMS devices, with particular focus on on-chip metrology (Vernier, Van der Pauw...) for precise characterisation directly within the die.</p>
         <div class="proj-tags"><span class="proj-tag">MEMS</span><span class="proj-tag">K Layout</span><span class="proj-tag">On-Chip Metrology</span><span class="proj-tag">Vernier Scales</span><span class="proj-tag">Open Source</span></div>
       </div>
       <div class="proj-card reveal">
         <div class="proj-num">Project 02 — Ongoing </div>
         <h3 class="proj-title">Heterogeneous Integration of PICs &amp; EICs</h3>
         <div class="proj-role">Advanced Packaging · ET4391 — Literature Review &amp; Feasibility Analysis</div>
-        <p class="proj-body">Comprehensive literature review and feasibility analysis of co-integration strategies for Photonic and Electronic ICs. Focused on high-frequency solutions — specifically Thin-Film Lithium Niobate (TFLN) — with a thorough examination of Optical Circuit Switches (OCS) as a use case for next-generation AI datacenter interconnects.</p>
+        <p class="proj-body">Comprehensive literature review and feasibility analysis of co-integration strategies for Photonic and Electronic ICs. Focused on high-frequency solutions. Special depth on Thin-Film Lithium Niobate (TFLN) with a thorough examination of Optical Circuit Switches (OCS) as a use case for next-generation AI datacenter interconnects.</p>
         <div class="proj-tags"><span class="proj-tag">PICs &amp; EICs</span><span class="proj-tag">TFLN</span><span class="proj-tag">Optical Circuit Switches</span><span class="proj-tag">AI Datacenters</span><span class="proj-tag">Advanced Packaging</span></div>
       </div>
       <div class="proj-card reveal">
         <div class="proj-num">Project 03 — Ongoing </div>
         <h3 class="proj-title">Manufacturing of Perovskite–CIGS Solar Cells</h3>
         <div class="proj-role">Thin Film Materials · ME46065 — Manufacturing Scalability</div>
-        <p class="proj-body">Investigating the manufacturing scalability of Perovskite and CIGS tandem thin-film solar cells. Research explores alternatives to ultrasonic spin-coating for conformal deposition at industrial scale, alongside techniques for pinhole effect reduction — a critical yield and reliability challenge in perovskite absorber layers.</p>
+        <p class="proj-body">Investigating the manufacturing scalability of Perovskite and CIGS tandem thin-film solar cells. Research explores alternatives to ultrasonic spin-coating for conformal deposition at industrial scale, alongside techniques for pinhole effect reduction.</p>
         <div class="proj-tags"><span class="proj-tag">Perovskite</span><span class="proj-tag">CIGS</span><span class="proj-tag">Thin Film</span><span class="proj-tag">Scalability</span><span class="proj-tag">Conformality</span><span class="proj-tag">Pinhole Reduction</span></div>
       </div>
             <div class="proj-card reveal">
         <div class="proj-num">Project 04 — Ongoing </div>
-        <h3 class="proj-title">Design of a Coarse Point Aligner for TNO </h3>
+        <h3 class="proj-title">Design of a Coarse Point Aligner for Space Communications (TNO) </h3>
         <div class="proj-role">Precision Mechanism Design · ME46015-23 — Systems Engineer of Optomecatronics Team</div>
-        <p class="proj-body">Mechanical design of a CPA with strong acquisition and tracking requirements. Design of optics topology, usage of Systems Engineering standards (PMBox, PMMI, NASA's Handbook) for team management </p>
+        <p class="proj-body">Mechanical design of a CPA with strong acquisition and tracking requirements. Design of optics topology, usage of Systems Engineering standards (PMBok, PMMI, NASA's Handbook) for team management </p>
         <div class="proj-tags"><span class="proj-tag">Optics</span><span class="proj-tag">CPA</span><span class="proj-tag">Precision Mechanisms</span><span class="proj-tag">Project Management</span><span class="proj-tag">Systems Engineering</span></div>
       </div>
     </div>
@@ -355,25 +276,151 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
       <p class="page-eyebrow">02 — Academic</p>
       <h2 class="page-title">Coursed <em>Subjects</em></h2>
     </div>
-    <p class="courses-intro reveal">MSc curriculum at TU Delft spanning MEMS design, micromanufacturing, advanced packaging, photonics, precision engineering, mechatronics, nonlinear mechanics, and ethics of AI.</p>
+    <p class="courses-intro reveal">MSc High-Tech Engineering curriculum at TU Delft spanning MEMS design, micromanufacturing, advanced packaging, photonics, precision engineering, mechatronics, nonlinear mechanics, and ethics of AI.</p>
     <div class="courses-grid">
-      <div class="course-card reveal"><span class="course-code">AP3222</span><span class="course-name">Nanotechnology</span></div>
-      <div class="course-card reveal"><span class="course-code">ET4260</span><span class="course-name">Microsystem Design and Modelling</span></div>
-      <div class="course-card reveal"><span class="course-code">ET4391</span><span class="course-name">Advanced Microelectronics Packaging</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46000</span><span class="course-name">Nonlinear Mechanics</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46006</span><span class="course-name">Physics for Mechanical Engineers</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46007</span><span class="course-name">Measurement Technology</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46015</span><span class="course-name">Precision Mechanism Design</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46020</span><span class="course-name">Micro &amp; Nanosystems Design and Fabrication incl. MEMS Lab</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46025</span><span class="course-name">Manufacturing for the Micro and Nano Scale</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46055</span><span class="course-name">Engineering Dynamics</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46065</span><span class="course-name">Thin Film Materials</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46085</span><span class="course-name">Mechatronic System Design</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46110</span><span class="course-name">Intro Lab PME</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46115</span><span class="course-name">Compliant Mechanisms</span></div>
-      <div class="course-card reveal"><span class="course-code">ME46400</span><span class="course-name">Applied Optics for Engineers</span></div>
-      <div class="course-card reveal"><span class="course-code">TPM015B</span><span class="course-name">Ethics of AI</span></div>
+
+      <div class="course-card reveal">
+        <span class="course-code">AP3222</span>
+        <div><span class="course-name">Nanotechnology</span><div class="course-ects">6 ECTS</div></div>
+        <span class="course-desc">Full-picture of micromanufacturing techniques across the nanodevice lifecycle:from layer growth (PVD, CVD…) through inspection (contrast optics, e-beam, EDX…). Good analysis of each technology's trade-offs by use case.</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ET4260</span>
+        <div><span class="course-name">Microsystem Design and Modelling</span><div class="course-ects">4 ECTS</div></div>
+        <span class="course-desc"> Project-based learning: Design &amp FEM analysis of multiphysics microsystems. Practical work in COMSOL and LTSpice for coupled electro-mechanical simulation.</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ET4391</span>
+        <div><span class="course-name">Advanced Microelectronics Packaging</span><div class="course-ects">3 ECTS</div></div>
+        <span class="course-desc">Research-oriented survey of cutting-edge packaging: heterogeneous integration, 2.5D architectures, self-assembly, and emerging co-integration strategies.</span>
+      </div>
+
+       <div class="course-card reveal">
+        <span class="course-code">ME46020</span>
+        <div><span class="course-name">Micro &amp; Nanosystems Design and Fabrication</span><div class="course-ects">4 ECTS · incl. MEMS Lab</div></div>
+        <span class="course-desc">Design-for-manufacturing of a MEMS device from concept to layout. Basics of mask design and cleanroom fabrication workflow.</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46025</span>
+        <div><span class="course-name">Manufacturing for the Micro and Nano Scale</span><div class="course-ects">3 ECTS</div></div>
+        <span class="course-desc">Project-based course about techniques and applications that are complementary to semiconductor lithography (2pp, NIL, microassembly...)</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46065</span>
+        <div><span class="course-name">Thin Film Materials</span><div class="course-ects">3 ECTS</div></div>
+        <span class="course-desc">Research project-oriented subject on different thin film growth and deposition techniques. </span>
+      </div>
+
+       <div class="course-card reveal">
+        <span class="course-code">ME46400</span>
+        <div><span class="course-name">Applied Optics for Engineers</span><div class="course-ects">4 ECTS</div></div>
+        <span class="course-desc">Comprehensive view of geometrical optics, wave optics, and Fourier optics from fundamental physics to engineering applications.</span>
+      </div>
+      
+      <div class="course-card reveal">
+        <span class="course-code">ME46015</span>
+        <div><span class="course-name">Precision Mechanism Design</span><div class="course-ects">4 ECTS</div></div>
+        <span class="course-desc">Project-based learning on a real company use case. Systems engineering across medium-sized teams (~20 people). Screw theory, FACT method, and design for stiffness and hysteresis.</span>
+      </div>
+      
+      <div class="course-card reveal">
+        <span class="course-code">ME46000</span>
+        <div><span class="course-name">Nonlinear Mechanics</span><div class="course-ects">4 ECTS</div></div>
+        <span class="course-desc">Lagrangian &amp eulerian descriptions, tensorial fundamentals. FEM &amp nonlinear dynamics fundamentals. Good understanding of mathematical foundations of FEM models (galerkin projections, tesselation...)</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46115</span>
+        <div><span class="course-name">Compliant Mechanisms</span><div class="course-ects">5 ECTS</div></div>
+        <span class="course-desc">Full-cycle project-based learning: concept design, PRBM, FEM, manufacturing, and testing of a compliant mechanism from scratch.</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46007</span>
+        <div><span class="course-name">Measurement Technology</span><div class="course-ects">3 ECTS</div></div>
+        <span class="course-desc">Fundamentals of experimental science: statistical methods for accurate result presentation, and a broad survey of sensor technologies covering different signal transduction and processing principles.</span>
+      </div>
+      
+      <div class="course-card reveal">
+        <span class="course-code">ME46085</span>
+        <div><span class="course-name">Mechatronic System Design</span></div>
+        <span class="course-desc">Fundamentals of control systems for precision mechanisms (feedback, feedforward). Physical foundations of actuators and transducers.</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46110</span>
+        <div><span class="course-name">Intro Lab PME</span><div class="course-ects">2 ECTS</div></div>
+         <span class="course-desc">Wide range of workshops for lab software &amp instrumentation usage (AFM, COMSOL...)</span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46006</span>
+        <div><span class="course-name">Physics for Mechanical Engineers</span><div class="course-ects">4 ECTS</div></div>
+        <span class="course-desc">Physics fundamentals review for engineering </span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">ME46055</span>
+        <div><span class="course-name">Engineering Dynamics</span><div class="course-ects">4 ECTS</div></div>
+        <span class="course-desc">EoM derivation using different techniques (Hamilton, Lagrange...) </span>
+      </div>
+
+      <div class="course-card reveal">
+        <span class="course-code">TPM015B</span>
+        <div><span class="course-name">Ethics of AI</span><div class="course-ects">3 ECTS</div></div>
+        <span class="course-desc">Debate-based exploration of AI's ethical implications. Critical analysis of current legislative frameworks and structured proposal of solutions.</span>
+      </div>
+
     </div>
+
+    <!-- BSc SECTION -->
+    <div class="bsc-section reveal">
+      <div class="bsc-divider">BSc Background</div>
+      <div class="bsc-degree">Electronics, Robotics &amp; Mechatronics Engineering</div>
+      <div class="bsc-school">Universidad de Málaga</div>
+
+      <div class="bsc-cols">
+        <div>
+          <div class="bsc-block-title">Passed with Honours</div>
+          <div class="honours-list">
+            <span class="honours-tag">Business Management</span>
+            <span class="honours-tag">Internet of Things</span>
+            <span class="honours-tag">Industrial Automation</span>
+            <span class="honours-tag">Circuit Theory</span>
+            <span class="honours-tag">Linear Algebra</span>
+            <span class="honours-tag">Calculus</span>
+            <span class="honours-tag">Statistics &amp; Operative Investigation</span>
+            <span class="honours-tag">Design</span>
+            <span class="honours-tag">BSc Thesis ★</span>
+          </div>
+        </div>
+        <div>
+          <div class="bsc-block-title">Skills &amp; Tools</div>
+          <div class="skills-list">
+            <span class="skill-tag">Control Systems</span>
+            <span class="skill-tag">Semiconductor Physics</span>
+            <span class="skill-tag">Analog Electronics</span>
+            <span class="skill-tag">VHDL</span>
+            <span class="skill-tag">Cadence</span>
+            <span class="skill-tag">Digital Twins</span>
+            <span class="skill-tag">Distributed Control Systems</span>
+            <span class="skill-tag">IoT</span>
+            <span class="skill-tag">ROS</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Industrial Automation</span>
+            <span class="skill-tag">PLC · Grafcet</span>
+            <span class="skill-tag">TwinCAT</span>
+            <span class="skill-tag">Simscape</span>
+            <span class="skill-tag">LabVIEW</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -390,7 +437,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
         <div class="tl-org">OWO — Haptic Gaming Suits</div>
         <div class="tl-role">Head of R&amp;D &amp; Hardware Development</div>
         <div class="tl-loc">Spain</div>
-        <p class="tl-desc">Led hardware development and a dedicated Use Case team across two Horizon Europe projects. Directed national-level research initiatives in 6G-IoT communication hardware and pulse-stimulation haptics — from concept definition through prototype validation.</p>
+        <p class="tl-desc"> Led a Use Case team for 2 Horizon Europe projects. Directed team for various national-level research projects in 6G communication for IoT hardware and Pulse Stimulation Haptics hardware. </p>
       </div>
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
@@ -403,7 +450,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
     <div class="outreach-band reveal">
       <div>
         <div class="outreach-title">Scientific Outreach — Various Collaborations</div>
-        <p class="outreach-desc">Featured on prime-time national media and local radio. Designed and organised public-facing science events connecting active researchers with local communities, making frontier research accessible to non-specialist audiences.</p>
+        <p class="outreach-desc">Featured on prime-time national media and local radio. Organised science events for active researchers to showcase their output to Málaga's local community, making frontier research accessible to non-specialist audiences.</p>
       </div>
       <div><div class="outreach-stat">100+<span>attendees / event</span></div></div>
     </div>
@@ -472,35 +519,6 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
 </div>
 
 <script>
-// MOBILE MENU
-function toggleMenu() {
-  const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('hamburger');
-  const isOpen = menu.classList.contains('open');
-  if (isOpen) {
-    menu.classList.remove('open');
-    btn.classList.remove('open');
-    document.body.style.overflow = '';
-  } else {
-    // highlight active page in drawer
-    menu.querySelectorAll('a[data-mobile-page]').forEach(a => {
-      a.classList.toggle('active-mobile', a.dataset.mobilePage === current);
-    });
-    menu.classList.add('open');
-    btn.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-function mobileNav(id) {
-  const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('hamburger');
-  menu.classList.remove('open');
-  btn.classList.remove('open');
-  document.body.style.overflow = '';
-  showPage(id);
-}
-
 // CURSOR
 const cursor = document.getElementById('cursor');
 document.addEventListener('mousemove', e => {
