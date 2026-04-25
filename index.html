@@ -168,18 +168,40 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
 @keyframes slideRight { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:translateX(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
+/* HAMBURGER — hidden on desktop */
+.nav-hamburger { display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:none;padding:6px;flex-shrink:0;cursor:pointer; }
+.nav-hamburger span { display:block;width:22px;height:1.5px;background:var(--mist);border-radius:2px;transition:transform .3s ease,opacity .3s ease,background .2s;transform-origin:center; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg);background:var(--gold); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg);background:var(--gold); }
+
+/* MOBILE DRAWER */
+.mobile-menu { display:none;position:fixed;inset:0;background:rgba(16,26,23,.97);backdrop-filter:blur(14px);z-index:150;flex-direction:column;justify-content:center;align-items:center;gap:4px;opacity:0;pointer-events:none;transition:opacity .3s ease; }
+.mobile-menu.open { display:flex;opacity:1;pointer-events:all; }
+.mobile-menu a { font-family:var(--serif);font-size:clamp(2rem,8vw,3rem);font-weight:300;color:var(--text-on-dark);text-decoration:none;padding:10px 0;letter-spacing:.02em;transition:color .2s; }
+.mobile-menu a:hover,.mobile-menu a.active-mobile { color:var(--warm-white); }
+.mobile-menu a em { font-style:normal;color:var(--gold); }
+.mobile-menu-footer { position:absolute;bottom:36px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--forest-mid); }
+
 /* RESPONSIVE */
 @media (max-width:768px) {
+  #cursor { display:none; }
+  *,*::before { cursor:auto !important; }
   nav { padding:20px 24px; }
-  .nav-links { gap:18px; }
-  .hero-content,.inner-page { padding-left:24px;padding-right:24px; }
+  .nav-links { display:none; }
+  .nav-hamburger { display:flex; }
+  .hero-content { padding-left:24px;padding-right:24px;padding-top:100px; }
+  .inner-page { padding:100px 24px 60px; }
   .hero-stats { display:none; }
+  .hero-name { font-size:clamp(2.8rem,11vw,5rem); }
+  .hero-cta { flex-direction:column;gap:12px; }
+  .btn { text-align:center; }
   .interests-layout { grid-template-columns:1fr; }
   .outreach-band { grid-template-columns:1fr; }
   .proj-card,.pub-card { padding:28px 24px; }
-}
-@media (max-width:480px) {
-  .nav-links { display:none; }
+  .pub-venue-row { flex-direction:column;gap:8px; }
+  .courses-grid { grid-template-columns:1fr; }
+  .bsc-cols { grid-template-columns:1fr;gap:24px; }
 }
 </style>
 </head>
@@ -197,7 +219,21 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
     <li><a href="#" onclick="showPage('publications');return false;" data-page="publications">Publications</a></li>
     <li><a href="#" onclick="showPage('interests');return false;" data-page="interests">Interests</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" data-mobile-page="home"         onclick="mobileNav('home');return false;">Home</a>
+  <a href="#" data-mobile-page="projects"     onclick="mobileNav('projects');return false;"><em>Projects</em></a>
+  <a href="#" data-mobile-page="courses"      onclick="mobileNav('courses');return false;"><em>Courses</em></a>
+  <a href="#" data-mobile-page="experience"   onclick="mobileNav('experience');return false;"><em>Experience</em></a>
+  <a href="#" data-mobile-page="publications" onclick="mobileNav('publications');return false;"><em>Publications</em></a>
+  <a href="#" data-mobile-page="interests"    onclick="mobileNav('interests');return false;"><em>Interests</em></a>
+  <div class="mobile-menu-footer">Alba Correal · TU Delft</div>
+</div>
 
 <!-- HOME -->
 <div id="page-home" class="page active">
@@ -218,6 +254,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
     <div class="hero-cta">
       <a class="btn btn-primary" href="#" onclick="showPage('projects');return false;">View Projects</a>
       <a class="btn btn-ghost" href="#" onclick="showPage('publications');return false;">Publications</a>
+      <a class="btn btn-ghost" href="mailto:A.CorrealOlmo@student.tudelft.nl">Get in Touch</a>
     </div>
   </div>
   <div class="hero-stats">
@@ -515,10 +552,44 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
         </ul>
       </div>
     </div>
+    <div style="margin-top:56px;padding-top:40px;border-top:1px solid rgba(93,138,130,.2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Want to connect?</div>
+        <p style="color:var(--text-on-dark);font-size:14px;line-height:1.7;max-width:480px;">Whether it's research collaboration, industry projects, or just a conversation about microtech and photonics — feel free to reach out.</p>
+      </div>
+      <a class="btn btn-primary" href="mailto:A.CorrealOlmo@student.tudelft.nl" style="white-space:nowrap;flex-shrink:0;">Get in Touch ↗</a>
+    </div>
   </div>
 </div>
 
 <script>
+// MOBILE MENU
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const btn  = document.getElementById('hamburger');
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    menu.querySelectorAll('a[data-mobile-page]').forEach(a => {
+      a.classList.toggle('active-mobile', a.dataset.mobilePage === current);
+    });
+    menu.classList.add('open');
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function mobileNav(id) {
+  const menu = document.getElementById('mobileMenu');
+  const btn  = document.getElementById('hamburger');
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+  showPage(id);
+}
+
 // CURSOR
 const cursor = document.getElementById('cursor');
 document.addEventListener('mousemove', e => {
