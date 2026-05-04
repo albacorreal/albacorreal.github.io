@@ -54,7 +54,7 @@ nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-conte
 .hero-bg { position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 50%,rgba(93,138,130,.13) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 10% 80%,rgba(201,169,110,.07) 0%,transparent 50%); }
 .hero-grid { position:absolute;inset:0;opacity:.06;background-image:linear-gradient(var(--sage) 1px,transparent 1px),linear-gradient(90deg,var(--sage) 1px,transparent 1px);background-size:60px 60px;animation:gridDrift 30s linear infinite; }
 @keyframes gridDrift { from{background-position:0 0} to{background-position:60px 60px} }
-.hero-svg { position: absolute;left:0;bottom:0;width: clamp(180px, 28vw, 420px);opacity:0.85;pointer-events:none;mix-blend-mode:screen;animation: floatSlow 8s ease-in-out infinite;}
+.hero-svg { position: absolute;left:-20px;bottom:-20px;width: clamp(180px, 28vw, 420px);opacity:0.85;pointer-events:none;mix-blend-mode:screen;animation: floatSlow 8s ease-in-out infinite;}
 @keyframes floatSlow {0%, 100% {transform: translateY(0px);}50% {transform: translateY(-10px);}}
 .hero-svg img {width: 100%; height: auto;display: block;}
 .hero-content { position:relative;max-width:1100px;margin:0 auto;padding:0 48px;padding-top:120px; }
